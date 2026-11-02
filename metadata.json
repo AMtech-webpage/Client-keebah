@@ -1,0 +1,6 @@
+{
+  "name": "Abdul Salam Rokibat - Virtual Assistant Portfolio",
+  "description": "Personal portfolio website for Abdul Salam Rokibat, an aspiring Virtual Assistant specializing in administrative support, calendar management, and data organization.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
