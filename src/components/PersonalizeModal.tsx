@@ -202,13 +202,16 @@ export const PersonalizeModal: React.FC<PersonalizeModalProps> = ({
               {formData.isWhatsAppActive && (
                 <div>
                   <label className="block text-xs font-medium text-[#38271F] mb-1">
-                    WhatsApp Number (with country code, e.g. +234...)
+                    Phone & WhatsApp Number (with country code, e.g. +234...)
                   </label>
                   <input
                     type="tel"
-                    value={formData.whatsAppNumber}
-                    onChange={e => handleTextChange('whatsAppNumber', e.target.value)}
-                    placeholder="+234..."
+                    value={formData.whatsAppNumber || formData.phoneNumber || ''}
+                    onChange={e => {
+                      handleTextChange('whatsAppNumber', e.target.value);
+                      handleTextChange('phoneNumber', e.target.value);
+                    }}
+                    placeholder="+234 907 678 6830"
                     className="w-full text-xs px-3.5 py-2 rounded-lg bg-white border border-[#C8A96A]/40 focus:outline-none focus:ring-1 focus:ring-[#6F4E37]"
                   />
                 </div>

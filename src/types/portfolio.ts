@@ -41,6 +41,7 @@ export interface ProfileData {
   email: string;
   linkedInUrl: string;
   whatsAppNumber: string;
+  phoneNumber?: string;
   isWhatsAppActive: boolean;
   location: string;
   availability: string;

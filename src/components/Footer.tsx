@@ -1,6 +1,6 @@
 import React from 'react';
 import { ProfileData } from '../types/portfolio';
-import { Linkedin, Mail, ArrowUp } from 'lucide-react';
+import { Linkedin, Mail, MessageCircle, Phone, ArrowUp } from 'lucide-react';
 
 interface FooterProps {
   profile: ProfileData;
@@ -8,6 +8,8 @@ interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = ({ profile }) => {
   const currentYear = new Date().getFullYear();
+  const phone = profile.phoneNumber || profile.whatsAppNumber || '+234 907 678 6830';
+  const cleanPhoneDigits = phone.replace(/[^0-9]/g, '');
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -59,16 +61,38 @@ export const Footer: React.FC<FooterProps> = ({ profile }) => {
               <h4 className="text-xs font-semibold text-[#6F4E37] uppercase tracking-wider mb-2">
                 Get In Touch
               </h4>
-              <p className="text-xs text-[#38271F]/80 break-all mb-3">
+              <p className="text-xs text-[#38271F]/80 break-all mb-1">
                 {profile.email}
+              </p>
+              <p className="text-xs text-[#6F4E37] font-mono mb-3">
+                {phone}
               </p>
               <div className="flex items-center gap-2">
                 <a
                   href={`mailto:${profile.email}`}
                   className="p-2 rounded-lg bg-white border border-[#C8A96A]/30 text-[#6F4E37] hover:bg-[#FFFDF7] transition-colors"
                   aria-label="Email Abdul"
+                  title="Send Email"
                 >
                   <Mail className="w-4 h-4" />
+                </a>
+                <a
+                  href={`https://wa.me/${cleanPhoneDigits}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-lg bg-white border border-emerald-300 text-emerald-700 hover:bg-emerald-50 transition-colors"
+                  aria-label="WhatsApp chat"
+                  title="Chat on WhatsApp"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                </a>
+                <a
+                  href={`tel:${cleanPhoneDigits.startsWith('+') ? cleanPhoneDigits : `+${cleanPhoneDigits}`}`}
+                  className="p-2 rounded-lg bg-white border border-[#C8A96A]/30 text-[#6F4E37] hover:bg-[#FFFDF7] transition-colors"
+                  aria-label="Call phone"
+                  title="Direct Call"
+                >
+                  <Phone className="w-4 h-4" />
                 </a>
                 <a
                   href={profile.linkedInUrl}
@@ -76,6 +100,7 @@ export const Footer: React.FC<FooterProps> = ({ profile }) => {
                   rel="noopener noreferrer"
                   className="p-2 rounded-lg bg-white border border-[#C8A96A]/30 text-[#6F4E37] hover:bg-[#FFFDF7] transition-colors"
                   aria-label="LinkedIn profile"
+                  title="LinkedIn"
                 >
                   <Linkedin className="w-4 h-4" />
                 </a>

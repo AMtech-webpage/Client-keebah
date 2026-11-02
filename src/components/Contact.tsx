@@ -4,6 +4,7 @@ import {
   Mail, 
   Linkedin, 
   MessageCircle, 
+  Phone,
   Copy, 
   Check, 
   Send, 
@@ -35,6 +36,8 @@ export const Contact: React.FC<ContactProps> = ({
   });
 
   const [copiedEmail, setCopiedEmail] = useState(false);
+  const [copiedPhone, setCopiedPhone] = useState(false);
+  const [copiedWhatsApp, setCopiedWhatsApp] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [copiedSummary, setCopiedSummary] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -54,6 +57,20 @@ export const Contact: React.FC<ContactProps> = ({
     navigator.clipboard.writeText(profile.email);
     setCopiedEmail(true);
     setTimeout(() => setCopiedEmail(false), 2000);
+  };
+
+  const handleCopyPhone = () => {
+    const num = profile.phoneNumber || profile.whatsAppNumber || '+234 907 678 6830';
+    navigator.clipboard.writeText(num);
+    setCopiedPhone(true);
+    setTimeout(() => setCopiedPhone(false), 2000);
+  };
+
+  const handleCopyWhatsApp = () => {
+    const num = profile.whatsAppNumber || '+234 907 678 6830';
+    navigator.clipboard.writeText(num);
+    setCopiedWhatsApp(true);
+    setTimeout(() => setCopiedWhatsApp(false), 2000);
   };
 
   const validate = () => {
@@ -103,6 +120,9 @@ ${formData.message}`;
     setTimeout(() => setCopiedSummary(false), 2000);
   };
 
+  const activePhone = profile.phoneNumber || profile.whatsAppNumber || '+234 907 678 6830';
+  const cleanPhoneDigits = activePhone.replace(/[^0-9]/g, '');
+
   return (
     <section id="contact" className="py-16 sm:py-24 bg-[#FFFDF7]">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -115,7 +135,7 @@ ${formData.message}`;
             Let’s Make Work Easier
           </h2>
           <p className="text-sm sm:text-base text-[#38271F]/80 leading-relaxed font-sans">
-            Ready to reclaim your time, organize your tasks, or explore a practice collaboration? Send a message below and I will get back to you promptly.
+            Ready to reclaim your time, organize your tasks, or explore a practice collaboration? Send a message below or connect directly via WhatsApp or phone.
           </p>
         </div>
 
@@ -129,12 +149,12 @@ ${formData.message}`;
                   Contact Information
                 </h3>
                 <p className="text-xs sm:text-sm text-[#38271F]/75 leading-relaxed">
-                  Placeholder details for Abdul Salam Rokibat. Click customize anytime to connect your live accounts.
+                  Connect with Abdul Salam Rokibat directly for consultations, practice projects, or administrative support inquiries.
                 </p>
               </div>
 
               {/* Email Card */}
-              <div className="p-4 rounded-xl bg-white border border-[#C8A96A]/30 flex items-start justify-between gap-3">
+              <div className="p-4 rounded-xl bg-white border border-[#C8A96A]/30 flex items-start justify-between gap-3 shadow-2xs">
                 <div className="flex items-start gap-3">
                   <div className="p-2 rounded-lg bg-[#FAF6EE] text-[#6F4E37] mt-0.5">
                     <Mail className="w-4 h-4" />
@@ -154,7 +174,7 @@ ${formData.message}`;
 
                 <button
                   onClick={handleCopyEmail}
-                  className="p-1.5 text-[#38271F]/60 hover:text-[#6F4E37] rounded-md transition-colors"
+                  className="p-1.5 text-[#38271F]/60 hover:text-[#6F4E37] rounded-md transition-colors shrink-0"
                   title="Copy email address"
                   aria-label="Copy email"
                 >
@@ -162,8 +182,89 @@ ${formData.message}`;
                 </button>
               </div>
 
+              {/* WhatsApp Card */}
+              <div className="p-4 rounded-xl bg-white border border-emerald-200/80 hover:border-emerald-300 transition-colors flex items-center justify-between gap-3 shadow-2xs">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-lg bg-emerald-50 text-emerald-700">
+                    <MessageCircle className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <span className="text-[11px] font-semibold uppercase tracking-wider text-emerald-800 block">
+                      WhatsApp Instant Chat
+                    </span>
+                    <a
+                      href={`https://wa.me/${cleanPhoneDigits}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs sm:text-sm font-mono font-medium text-[#38271F] hover:text-emerald-700 transition-colors"
+                    >
+                      {activePhone}
+                    </a>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-1 shrink-0">
+                  <button
+                    onClick={handleCopyWhatsApp}
+                    className="p-1.5 text-[#38271F]/60 hover:text-emerald-700 rounded-md transition-colors"
+                    title="Copy WhatsApp Number"
+                    aria-label="Copy WhatsApp number"
+                  >
+                    {copiedWhatsApp ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
+                  </button>
+
+                  <a
+                    href={`https://wa.me/${cleanPhoneDigits}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-800 bg-emerald-100/70 hover:bg-emerald-100 px-2.5 py-1 rounded transition-colors"
+                  >
+                    <span>Chat</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                </div>
+              </div>
+
+              {/* Direct Phone / Call Card */}
+              <div className="p-4 rounded-xl bg-white border border-[#C8A96A]/30 flex items-center justify-between gap-3 shadow-2xs">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-lg bg-[#FAF6EE] text-[#6F4E37]">
+                    <Phone className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <span className="text-[11px] font-semibold uppercase tracking-wider text-[#6F4E37] block">
+                      Phone / Direct Line
+                    </span>
+                    <a
+                      href={`tel:${cleanPhoneDigits.startsWith('+') ? cleanPhoneDigits : `+${cleanPhoneDigits}`}`}
+                      className="text-xs sm:text-sm font-mono font-medium text-[#38271F] hover:text-[#6F4E37] transition-colors"
+                    >
+                      {activePhone}
+                    </a>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-1 shrink-0">
+                  <button
+                    onClick={handleCopyPhone}
+                    className="p-1.5 text-[#38271F]/60 hover:text-[#6F4E37] rounded-md transition-colors"
+                    title="Copy phone number"
+                    aria-label="Copy phone number"
+                  >
+                    {copiedPhone ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
+                  </button>
+
+                  <a
+                    href={`tel:${cleanPhoneDigits.startsWith('+') ? cleanPhoneDigits : `+${cleanPhoneDigits}`}`}
+                    className="inline-flex items-center gap-1 text-xs font-semibold text-[#6F4E37] bg-[#FAF6EE] hover:bg-[#FFF1C1]/60 px-2.5 py-1 rounded border border-[#C8A96A]/30 transition-colors"
+                  >
+                    <span>Call</span>
+                  </a>
+                </div>
+              </div>
+
               {/* LinkedIn Card */}
-              <div className="p-4 rounded-xl bg-white border border-[#C8A96A]/30 flex items-center justify-between gap-3">
+              <div className="p-4 rounded-xl bg-white border border-[#C8A96A]/30 flex items-center justify-between gap-3 shadow-2xs">
                 <div className="flex items-center gap-3">
                   <div className="p-2 rounded-lg bg-[#FAF6EE] text-[#6F4E37]">
                     <Linkedin className="w-4 h-4" />
@@ -188,45 +289,6 @@ ${formData.message}`;
                   <ExternalLink className="w-3 h-3" />
                 </a>
               </div>
-
-              {/* WhatsApp Card (Strictly conditional as instructed) */}
-              {profile.isWhatsAppActive && profile.whatsAppNumber.trim().length > 0 ? (
-                <div className="p-4 rounded-xl bg-white border border-[#C8A96A]/30 flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-emerald-50 text-emerald-700">
-                      <MessageCircle className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <span className="text-[11px] font-semibold uppercase tracking-wider text-[#6F4E37] block">
-                        WhatsApp Instant Chat
-                      </span>
-                      <span className="text-xs text-[#38271F]/70 font-mono">
-                        {profile.whatsAppNumber}
-                      </span>
-                    </div>
-                  </div>
-
-                  <a
-                    href={`https://wa.me/${profile.whatsAppNumber.replace(/[^0-9]/g, '')}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-800 bg-emerald-100/70 hover:bg-emerald-100 px-2.5 py-1 rounded transition-colors"
-                  >
-                    <span>Chat</span>
-                    <ExternalLink className="w-3 h-3" />
-                  </a>
-                </div>
-              ) : (
-                <div className="p-3 rounded-xl bg-[#FFFDF7] border border-dashed border-[#C8A96A]/40 text-xs text-[#38271F]/70 flex items-center justify-between">
-                  <span>WhatsApp direct channel currently unconfigured</span>
-                  <button
-                    onClick={onOpenPersonalize}
-                    className="text-[#6F4E37] font-semibold hover:underline text-[11px]"
-                  >
-                    Add Number
-                  </button>
-                </div>
-              )}
 
               {/* Availability & Response Times */}
               <div className="space-y-2 pt-2 text-xs text-[#38271F]/80">

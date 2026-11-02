@@ -10,8 +10,9 @@ export const DEFAULT_PROFILE: ProfileData = {
     "Hello, I’m Abdul Salam Rokibat, an aspiring Virtual Assistant passionate about organisation, productivity, and helping people work more efficiently. I’m currently developing my skills and exploring ways to provide reliable virtual support to busy professionals and growing businesses. My goal is to make everyday tasks easier, help keep things organised, and contribute positively to the people I work with.",
   email: "contact@abdulsalamrokibat.com",
   linkedInUrl: "https://linkedin.com/in/abdulsalamrokibat-placeholder",
-  whatsAppNumber: "", // Empty placeholder until user configures a real WhatsApp number
-  isWhatsAppActive: false,
+  whatsAppNumber: "+234 907 678 6830",
+  phoneNumber: "+234 907 678 6830",
+  isWhatsAppActive: true,
   location: "Remote / Global Timezones",
   availability: "Open to Practice Projects & Entry-Level Opportunities",
 };

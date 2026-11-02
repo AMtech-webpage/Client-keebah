@@ -17,7 +17,19 @@ export default function App() {
   const [profile, setProfile] = useState<ProfileData>(() => {
     try {
       const saved = localStorage.getItem('asr_portfolio_profile');
-      if (saved) return JSON.parse(saved);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (!parsed.whatsAppNumber || parsed.whatsAppNumber === '') {
+          return {
+            ...DEFAULT_PROFILE,
+            ...parsed,
+            whatsAppNumber: DEFAULT_PROFILE.whatsAppNumber,
+            phoneNumber: DEFAULT_PROFILE.phoneNumber,
+            isWhatsAppActive: true,
+          };
+        }
+        return { ...DEFAULT_PROFILE, ...parsed };
+      }
     } catch (e) {
       console.warn('Could not read saved profile from localStorage', e);
     }
